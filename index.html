@@ -1,0 +1,84 @@
+<!doctype html>
+<!-- The skeleton of this file was taken from https://openlayers.org/en/latest/doc/quickstart.html -->
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <title>OpenLayers example</title>
+  </head>
+  <body>
+    <h2>My Map</h2>
+    <div id="map" class="map"></div>
+    <script type="module">
+      // Code samples on rendering markers taken from open layers website: https://openlayers.org/en/latest/examples/regularshape.html 
+      var features = new Array(3);
+      features[0] = new ol.Feature(new ol.geom.Point(ol.proj.transform([-120.6596, 35.2828], 'EPSG:4326', 'EPSG:3857')));
+      features[0].setStyle(
+        new ol.style.Style({
+          image: new ol.style.RegularShape({
+            fill: new ol.style.Fill({color: 'red'}),
+            stroke: new ol.style.Stroke({color: 'black', width: 2}),
+            points: 4,
+            radius: 10,
+            angle: Math.PI / 4,
+          }),
+        })
+      );
+
+      features[1] = new ol.Feature(new ol.geom.Point(ol.proj.transform([-120.659, 35.27], 'EPSG:4326', 'EPSG:3857')));
+      features[1].setStyle(
+        new ol.style.Style({
+          image: new ol.style.RegularShape({
+            fill: new ol.style.Fill({color: 'green'}),
+            stroke: new ol.style.Stroke({color: 'black', width: 2}),
+            points: 4,
+            radius: 10,
+            angle: Math.PI / 4,
+          }),
+        })
+      );
+
+      features[2] = new ol.Feature(new ol.geom.Point(ol.proj.transform([-120.65, 35.28], 'EPSG:4326', 'EPSG:3857')));
+      features[2].setStyle(
+        new ol.style.Style({
+          image: new ol.style.RegularShape({
+            fill: new ol.style.Fill({color: 'blue'}),
+            stroke: new ol.style.Stroke({color: 'black', width: 2}),
+            points: 4,
+            radius: 10,
+            angle: Math.PI / 4,
+          }),
+        })
+      );
+
+      var source = new ol.source.Vector({
+        features: features,
+      });
+
+      var vectorLayer = new ol.layer.Vector({
+        source: source,
+      });
+      
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }),
+          vectorLayer
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([-120.6596, 35.2828]),
+          zoom: 12
+        })
+      });
+    </script>
+    <span>&#183;</span>
+  </body>
+</html>
